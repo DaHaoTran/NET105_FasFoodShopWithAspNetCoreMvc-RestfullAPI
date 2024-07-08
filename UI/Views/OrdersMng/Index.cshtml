@@ -1,0 +1,85 @@
+﻿@model IEnumerable<UI.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+    string Searchstr = string.Empty;
+}
+
+<h1 style="margin-top: 150px">Order Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+<form asp-action="Search" asp-controller="OrdersMng" asp-route-searchstr="@Searchstr">
+    <div class="input-group">
+        <input class="form-control" type="search" required asp-for="@Searchstr" placeholder="Nhập email khách hàng" aria-label="Search" id="Search" size="35px">
+        <input type="submit" class="input-group-text btn btn-secondary" value="Search">
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CInforId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerEmail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CInforId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerEmail)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="OrdersMng" asp-route-id="@item.OrderId">Edit</a> |
+                <a asp-action="Details" asp-controller="OrdersMng" asp-route-id="@item.OrderId">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="btn-group">
+    <a asp-action="Prev" asp-controller="OrdersMng" class="btn btn-primary mt-3 me-3 me-5 p-2"><i class="fa-solid fa-arrow-left"></i></a>
+    <a asp-action="Next" asp-controller="OrdersMng" class="btn btn-primary mt-3 me-5 p-2"><i class="fa-solid fa-arrow-right"></i></a>
+</div>

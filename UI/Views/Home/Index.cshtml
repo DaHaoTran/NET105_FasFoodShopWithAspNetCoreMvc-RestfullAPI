@@ -1,0 +1,526 @@
+﻿@model IEnumerable<UI.Models.Food>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Cart {
+    <!-- cart button -->
+    <div style="position: sticky; top: 20px; z-index: 1">
+        <a class="nav-link text-end" asp-action="Cart" asp-controller="Home">
+            <img src="~/images/cart.png" alt="Alternate Text" style="border: 1px solid black; border-radius: 35px; background-color: deepskyblue" />
+            <sup style="font-size: 12px" class="badge bg-danger" id="cartcount">
+                @{
+                    List<Food> foods = new List<Food>();
+                    var datas = HttpContextAccessor.HttpContext!.Session.GetString("cart");
+                    if (datas != null)
+                    {
+                        foods = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Food>>(datas!)!;
+                    }
+                }
+                @foods.Sum(x => x.Quantity)
+            </sup>
+        </a>
+    </div>
+    <!-- end cart button -->
+}
+
+<!-- slider section -->
+<section class=" slider_section position-relative">
+    <div class="side_heading">
+        <h5>
+            F
+            a
+            s
+            t
+            F
+            o
+            o
+            d
+        </h5>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 offset-md-1">
+                <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
+                            01
+                        </li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1">
+                            02
+                        </li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2">
+                            03
+                        </li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3">
+                            04
+                        </li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="img-box b-1">
+                                <img src="~/images/foods/hambergerandcocaandpotato.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-5 offset-md-1">
+                <div class="detail-box">
+                    <h1>
+                        Fast <br>
+                        Food
+                    </h1>
+                    <p>
+                        Cửa hàng chuyên cung cấp các loại đồ uống, thức ăn nhanh cho khách hàng.
+                        Hỗ trợ giao tận nơi
+                    </p>
+
+                    <div class="btn-box">
+                        <a href="" class="btn-1">
+                            Liên hệ
+                        </a>
+                        <a onclick="ToHot()" class="btn-2">
+                            Đặt ngay
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end slider section -->
+<!-- about section -->
+<section class="about_section position-relative">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 offset-md-1">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <h2>
+                            Về <br>
+                            Sản <br>
+                            Phẩm
+                        </h2>
+                        <hr>
+                    </div>
+                    <p>
+                        Cửa hàng có rất nhiều thức ăn liên quan đến thức ăn nhanh. Ngoài ra, cửa hàng 
+                        cũng có các loại combo thức ăn với giá rẻ hơn so với mua lẻ. Khi mua khách hàng
+                        sẽ được miễn phí ly đá (đối với nước uống) và tô, đũa, thìa, nước chấm (đối với thức ăn) 
+                    </p>
+                    <a asp-action="About">
+                        Read More
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 px-0">
+                <div class="img-box">
+                    <img src="~/images/about-img.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end about section -->
+<!-- List section -->
+
+<section class="dish_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="dish_container">
+                    @foreach(var item in ViewBag.Categories)
+                    {
+                        <div class="box" style="background-color: black">
+                            <a asp-action="Products" asp-controller="Home" asp-route-sort="0" asp-route-code="@item.FCategoryCode">
+                                <img src="~/images/foodcategories/@item.Image" alt="">
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <hr>
+                        <h2>
+                            Danh <br>
+                            mục <br>
+                        </h2>
+                    </div>
+                    <p>
+                        Các danh mục phân loại thức ăn
+                    </p>
+                    <a asp-action="Directory">
+                        Xem thêm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end List section -->
+<!-- hot section -->
+
+<section class="hot_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>
+                What's Hot
+            </h2>
+            <hr>
+        </div>
+        <p>
+            Một số thực phẩm được nhiều khách hàng tin dùng
+        </p>
+    </div>
+    <div class="carousel_container">
+        <div class="container">
+            <div class="carousel-wrap">
+                <div class="owl-carousel">
+                    @foreach (var food in Model)
+                    {
+                        <div class="item">
+                            <div class="box">
+                                <div class="img-box mt-5">
+                                    <img src="~/images/foods/@food.Image" />
+                                </div>
+                                <div class="detail-box mt-5">
+                                    <h4>
+                                        @food.CurrentPrice.ToString("##,###,###") đ 
+                                    </h4>
+                                    <a ng-click="GetFood(@Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented), '@food.FoodCode')" data-bs-delay='{"show":1000,"hide":150}' id="navbordered" aria-current="page" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1">
+                                        Đặt Món
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end hot section -->
+<!-- order offcanvas-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" style="width: 500px">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <h2 class="text-center">Chọn số lượng</h2>
+        <table class="table table-borderless text-start">
+            <tr class="my-4">
+                <th><img src="~/images/foods/{{imageset}}" width="150px" alt="Image" style="border: 1px solid black" /></th>
+            </tr>
+            <tr class="my-4">
+                <th><h3>{{nameset}}</h3></th>
+            </tr>
+            <tr class="my-4">
+                <th><h3>{{priceset | number}} đồng</h3></th>
+            </tr>
+        </table>
+        <form>
+            <div class="value-button" id="decrease" value="Decrease Value">-</div>
+            <input type="number" id="number" value="1" min="1" readonly/>
+            <div class="value-button" id="increase" value="Increase Value">+</div>
+        </form>
+        @* <p class="text-danger" id="limitmess"></p> *@
+        @* <input type="hidden" asp-for="{{codeset}}" />
+        <input type="hidden" asp-for="{{imageset}}" /> *@
+        <button type="button" data-id="{{codeset}}" data-bs-dismiss="offcanvas" aria-label="Close" class="btn btn-primary mt-3 text-center align-content-center ajax-add-to-cart" style="font-size: 20px; height: 50px; width: 100%">Xác nhận</button>
+    </div>
+</div>
+<!-- end order offcanvas-->
+<!-- client section -->
+
+<section class="client_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <hr>
+            <h2>
+                Phản hồi từ khách hàng
+            </h2>
+        </div>
+        <div id="carouselExample2Indicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExample2Indicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExample2Indicators" data-slide-to="1"></li>
+                <li data-target="#carouselExample2Indicators" data-slide-to="2"></li>
+                <li data-target="#carouselExample2Indicators" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="box ">
+                        <div class="client_id">
+                            <div class="img-box">
+                                <img src="~/images/client.png" alt="" class="img-fluid">
+                            </div>
+                            <h4>
+                                Jacksmith sand
+                            </h4>
+                        </div>
+                        <div class="detail-box">
+                            <p>
+                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                                alteration in
+                                some form, by injected humour, or randomised words which .
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="box ">
+                        <div class="client_id">
+                            <div class="img-box">
+                                <img src="images/client.png" alt="" class="img-fluid">
+                            </div>
+                            <h4>
+                                Jacksmith sand
+                            </h4>
+                        </div>
+                        <div class="detail-box">
+                            <p>
+                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                                alteration in
+                                some form, by injected humour, or randomised words which .
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="box ">
+                        <div class="client_id">
+                            <div class="img-box">
+                                <img src="images/client.png" alt="" class="img-fluid">
+                            </div>
+                            <h4>
+                                Jacksmith sand
+                            </h4>
+                        </div>
+                        <div class="detail-box">
+                            <p>
+                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                                alteration in
+                                some form, by injected humour, or randomised words which .
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="box ">
+                        <div class="client_id">
+                            <div class="img-box">
+                                <img src="images/client.png" alt="" class="img-fluid">
+                            </div>
+                            <h4>
+                                Jacksmith sand
+                            </h4>
+                        </div>
+                        <div class="detail-box">
+                            <p>
+                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                                alteration in
+                                some form, by injected humour, or randomised words which .
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- end client section -->
+<!-- register section -->
+
+<section class="contact_section layout_padding-bottom ">
+    <div class="container">
+        @if(LogStateC.IsLoggedIn == false)
+        {
+            <h2>
+                Đăng ký mua hàng
+            </h2>
+        }
+        <div class="row">
+            <div class="col-md-5">
+                <div class="contact_box">
+                    <a>
+                        <div class="img-box">
+                            <img src="images/location.png" alt="">
+                        </div>
+                        <h6>
+                            Phường Trung Mỹ Tây, Quận 12, TP.HCM
+                        </h6>
+                    </a>
+                    <a>
+                        <div class="img-box">
+                            <img src="images/call.png" alt="">
+                        </div>
+                        <h6>
+                            (+84) 324961023
+                        </h6>
+                    </a>
+                    <a>
+                        <div class="img-box">
+                            <img src="images/envelope.png" alt="">
+                        </div>
+                        <h6>
+                            haotgps30117@fpt.edu.vn
+                        </h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end register section -->
+
+<!-- footer section -->
+<section class="container-fluid footer_section">
+    <div class="container text-center footer_section" style="color: white">
+        NET105-SD18318-PS30117-TranGiaHao-ASM
+    </div>
+</section>
+<!-- footer section -->
+
+<!-- add to cart script -->
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Debounce function
+            // function debounce(func, delay) {
+            //     let timeout;
+            //     return function () {
+            //         const context = this, args = arguments;
+            //         clearTimeout(timeout);
+            //         timeout = setTimeout(() => func.apply(context, args), delay);
+            //     };
+            // }
+
+            // function CallCartController() {
+            //     $.ajax({
+            //         url: "/Home/UpdateCartItem",
+            //         success: function () {
+            //             console.log("Cart is saved !");
+            //         },
+            //         error: function () {
+            //             console.log("Error update to cart !");
+            //         }
+            //     });
+            // };
+            $(".ajax-add-to-cart").click(function () {
+                $.ajax({
+                    url: "/Home/AddToCart",
+                    data: {
+                        id: $(this).data("id"),
+                        quantity: 1,
+                    },
+                    success: function (data) {
+                        //Update cart
+                        // debounce(CallCartController, 1000);
+                        // Get Quantity in cart
+                        // console.log(data);
+                        setTimeout(function () {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Đã thêm vào giỏ hàng",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }, 700);
+                        var count = parseInt(document.querySelector("#cartcount").innerHTML);
+                        count += data.quantity
+                        $("#cartcount").html(count);
+                    },
+                    error: function () {
+                        console.log("Error");
+                    }
+                });
+            });
+        });
+    </script>
+}
+<!-- end add to cart script -->
+<!-- Complete payment-->
+@{
+    bool showMessage = false;
+    if (TempData["Payment"] != null)
+    {
+        showMessage = (bool)TempData["Payment"]!;
+    }
+}
+
+@if (showMessage)
+{
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#cartcount").html(0);
+            Swal.fire({
+                title: "Hoàn tất mua hàng, Thanks nhé !",
+                width: 600,
+                padding: "3em",
+                color: "#716add",
+                background: "#fff url(/images/trees.png)",
+                backdrop: `
+                    rgba(0,0,123,0.4)
+                    url("/images/ghost.gif")
+                    left top
+                    no-repeat
+                    `
+            });
+        })
+    </script>
+}
+<!-- End Complete payment-->
+<!-- Login/Register -->
+@{
+    bool showMessage1 = false;
+    if (TempData["Log/Res"] != null)
+    {
+        showMessage1 = (bool)TempData["Log/Res"]!;
+    }
+}
+
+@if (showMessage1)
+{
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#cartcount").html(0);
+            Swal.fire(
+                'Xác nhận!',
+                'Đăng nhập thành công!',
+                'success'
+            )
+        })
+    </script>
+}
+<!-- End Login/Register -->
+<!-- Registe Address -->
+@{
+    bool showMessage2 = false;
+    if (TempData["AddRes"] != null)
+    {
+        showMessage2 = (bool)TempData["AddRes"]!;
+    }
+}
+
+@if (showMessage2)
+{
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#cartcount").html(0);
+            Swal.fire(
+                'Xác nhận!',
+                'Tạo thông tin giao hàng thành công!',
+                'success'
+            )
+        })
+    </script>
+}
+<!-- End Registe Address -->

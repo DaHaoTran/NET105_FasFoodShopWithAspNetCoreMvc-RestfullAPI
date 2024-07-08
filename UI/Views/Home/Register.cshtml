@@ -1,0 +1,80 @@
+﻿@model UI.Models.Customer
+@{
+    ViewData["Title"] = "Register Page";
+}
+
+<!-- register section -->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top" 
+            style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid">
+            <h2>
+                Đăng ký mua hàng
+            </h2>
+            @if(TempData["Error"] != null)
+            {
+                <div class="alert alert-success mt-2">
+                    @TempData["Error"]
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form_container">
+                        <form asp-action="Register" asp-controller="Home" method="post">
+                            <input asp-for="Email" type="email" required placeholder="Email">
+                            <span asp-validation-for="Email"></span>
+                            <input asp-for="PassWord" type="password" required placeholder="Mật khẩu">
+                            <span asp-validation-for="PassWord"></span>
+                            <input asp-for="ConfirmPassWord" type="password" required placeholder="Xác nhận mật khẩu">
+                            <span asp-validation-for="ConfirmPassWord"></span>
+                            <div class="text-end mt-1">
+                                hoặc
+                                <partial name="_LoginPartial"></partial> 
+                            </div>
+                            <button type="submit">Send</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="contact_box">
+                        <a>
+                            <div class="img-box">
+                                <img src="~/images/location.png" alt="">
+                            </div>
+                            <h6>
+                                Phường Trung Mỹ Tây, Quận 12, TP.HCM
+                            </h6>
+                        </a>
+                        <a>
+                            <div class="img-box">
+                                <img src="~/images/call.png" alt="">
+                            </div>
+                            <h6>
+                                (+84) 324961023
+                            </h6>
+                        </a>
+                        <a>
+                            <div class="img-box">
+                                <img src="~/images/envelope.png" alt="">
+                            </div>
+                            <h6>
+                                haotgps30117@fpt.edu.vn
+                            </h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end register section -->
+
+<!-- footer section -->
+<section class="container-fluid footer_section position-relative">
+    <div class="container text-center footer_section" style="color: white">
+        NET105-SD18318-PS30117-TranGiaHao-ASM
+    </div>
+</section>
+<!-- footer section -->

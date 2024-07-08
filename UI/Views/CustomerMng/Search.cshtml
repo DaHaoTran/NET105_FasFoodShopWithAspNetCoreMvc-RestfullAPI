@@ -1,0 +1,54 @@
+﻿@model UI.Models.Customer
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Customer Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+<a asp-action="Back" asp-controller="CustomerMng">Trở lại</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PassWord)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Admins)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.PassWord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.AdminCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@Model.Email" asp-controller="CustomerMng">Edit</a> |
+                <a asp-action="Details" asp-route-id="@Model.Email" asp-controller="CustomerMng">Details</a> |
+                <a asp-action="Delete" asp-route-id="@Model.Email" asp-controller="CustomerMng">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

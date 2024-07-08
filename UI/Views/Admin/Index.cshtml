@@ -1,0 +1,212 @@
+﻿@model IEnumerable<UI.Models.Food>
+@{
+    ViewData["Title"] = "Index Page";
+    Layout = "Layout2";
+}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Admin">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+
+                <!-- Sales Card -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
+
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+
+                                <li><a class="dropdown-item" href="#">Today</a></li>
+                                <li><a class="dropdown-item" href="#">This Month</a></li>
+                                <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Sales <span>| Today</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cart"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.Orderday</h6>
+                                    @{
+                                        int count = ViewBag.Orderday / 100;
+                                    }
+                                    @if(count < 20)
+                                    {
+                                        <span class="text-danger small pt-1 fw-bold">@count%</span>
+                                        <span class="text-muted small pt-2 ps-1">decrease</span>
+                                    }
+                                    else if (count / 100 >= 20)
+                                    {
+                                        <span class="text-success small pt-1 fw-bold">@count%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- End Sales Card -->
+                <!-- Revenue Card -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card revenue-card">
+
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+
+                                <li><a class="dropdown-item" href="#">Today</a></li>
+                                <li><a class="dropdown-item" href="#">This Month</a></li>
+                                <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Revenue <span>| This Month</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.Ordermonth</h6>
+                                    @{
+                                        int count2 = ViewBag.Ordermonth / 500;
+                                    }
+                                    @if (count2 < 200)
+                                    {
+                                        <span class="text-danger small pt-1 fw-bold">@count2%</span>
+                                        <span class="text-muted small pt-2 ps-1">decrease</span>
+                                    }
+                                    else if (count2 / 100 >= 200)
+                                    {
+                                        <span class="text-success small pt-1 fw-bold">@count2%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- End Revenue Card -->
+                <!-- Customers Card -->
+                <div class="col-xxl-4 col-xl-12">
+
+                    <div class="card info-card customers-card">
+
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+
+                                <li><a class="dropdown-item" href="#">Today</a></li>
+                                <li><a class="dropdown-item" href="#">This Month</a></li>
+                                <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Customers <span>| This Year</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.Orderyear</h6>
+                                    @{
+                                        int count3 = ViewBag.Orderyear / 1000;
+                                    }
+                                    @if (count2 < 400)
+                                    {
+                                        <span class="text-danger small pt-1 fw-bold">@count2%</span>
+                                        <span class="text-muted small pt-2 ps-1">decrease</span>
+                                    }
+                                    else if (count2 / 100 >= 400)
+                                    {
+                                        <span class="text-success small pt-1 fw-bold">@count2%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div><!-- End Customers Card -->
+               
+                <!-- Top Selling -->
+                <div class="col-12">
+                    <div class="card top-selling overflow-auto">
+
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+
+                                <li><a class="dropdown-item" href="#">Today</a></li>
+                                <li><a class="dropdown-item" href="#">This Month</a></li>
+                                <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">Top Selling <span>| Today</span></h5>
+
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Preview</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Sold</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model.Take(5))
+                                    {
+                                        <tr>
+                                            <th scope="row"><a><img src="~/images/foods/@item.Image"></a></th>
+                                            <td><a class="text-primary fw-bold">@item.FoodName</a></td>
+                                            <td>@item.CurrentPrice</td>
+                                            <td class="fw-bold">@item.Sold</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div><!-- End Top Selling -->
+
+            </div>
+        </div>
+    </div>
+
+</section>

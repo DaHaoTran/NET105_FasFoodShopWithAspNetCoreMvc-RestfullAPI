@@ -1,0 +1,83 @@
+﻿@model IEnumerable<UI.Models.Food>
+@{
+    ViewData["Title"] = "ProductDetail Page";
+    int? all = 0;
+}
+
+<!-- detail section -->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid text-center">
+            <h1 class="text-center mb-5">Thông tin chi tiết</h1>
+            <table class="table table-borderless text-center position-relative" id="cart">
+                <tr>
+                    <th><h5>Ảnh sản phẩm</h5></th>
+                    <th><h5>Tên</h5></th>
+                    <th><h5>Đơn giá</h5></th>
+                    <th><h5>Số lượng</h5></th>
+                    <th><h5>Tổng tiền</h5></th>
+                    <th><h5>Đánh giá</h5></th>
+                </tr>
+
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td style="width: 100px;">
+                            <img class="img-thumbnail" style="width: 200px;" src="~/images/foods/@item.Image">
+                        </td>
+                        <td style="width: 300px">
+                            <h5>@item.FoodName</h5>
+                        </td>
+                        <td style="width: 200px; color: green">
+                            <h5>@item.CurrentPrice</h5>
+                        </td>
+                        <td style="width: 200px;">
+                            <h5>@item.Quantity</h5>
+                        </td>
+                        <td style="width: 200px; color: green">
+                            @{
+                                int? total = item.Quantity * item.CurrentPrice;
+                                all += total;
+                            }
+                            <h5>@total?.ToString("##,###,###") đ</h5>
+                        </td>
+                        <td style="width: 200px">
+                            @if(ViewBag.State == "Delivered")
+                            {
+                                if(item.Rated == false)
+                                {
+                                    <a class="btn btn-danger" asp-action="Rate" asp-route-code="@item.FoodCode" asp-route-id="@item.OrderId">Đánh giá</a>
+                                } else
+                                {
+                                    <h5 style="color: green"><i class="fa-solid fa-check"></i> Đã đánh giá</h5>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5" class="text-start"><h5>Tổng thanh toán: @all?.ToString("##,###,###") đ</h5></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-start"><h5>Phương thức thanh toán: @ViewBag.PaymentMethod</h5></td>
+                </tr>
+                <tr>
+                    <td>
+                        <form class="text-start m-2">
+                            <label class="form-label"><h4>Địa chỉ: </h4></label>
+                            <div class="card bg-warning">
+                                <div class="card-body">
+                                    <strong>@ViewBag.Address.PhoneNumber</strong>
+                                    <p>@ViewBag.Address.CustomerName</p>
+                                    <p>@ViewBag.Address.Address</p>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</div>
+<!--end detail section-->

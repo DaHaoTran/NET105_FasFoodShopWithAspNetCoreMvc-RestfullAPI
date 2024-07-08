@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+    <title>@ViewData["Title"] - FoodShopAdmin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/adminstyle.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-lg-2">
+            <!-- ======= Header ======= -->
+            <header id="header" class="header fixed-top d-flex align-items-center">
+
+                <div class="d-flex align-items-center justify-content-between">
+                    <a asp-action="Index" asp-controller="Admin" class="logo d-flex align-items-center">
+                        <img src="~/images/logo.png" />
+                        <span class="d-none d-lg-block">FastFoodAdmin</span>
+                    </a>
+                    <i class="bi bi-list toggle-sidebar-btn"></i>
+                </div><!-- End Logo -->
+
+                <nav class="header-nav ms-auto">
+                    <ul class="d-flex align-items-center">
+
+                        <li class="nav-item dropdown pe-3">
+
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                <img src="~/images/user.png" />
+                                @if (string.IsNullOrEmpty(LogState.Email))
+                                {
+                                    <span class="d-none d-md-block dropdown-toggle ps-2">Unknow</span>
+                                }
+                                else
+                                {
+                                    <span class="d-none d-md-block dropdown-toggle ps-2">@LogState.Email</span>
+                                }
+                            </a><!-- End Profile Iamge Icon -->
+
+                            @if(LogState.IsLoged)
+                            {
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                                    <li class="dropdown-header">
+                                        @if(string.IsNullOrEmpty(LogState.Email))
+                                        {
+                                            <h6>Unknow</h6>    
+                                        } else
+                                        {
+                                            <h6>@LogState.Email</h6>
+                                        }
+                                        <span>Admin</span>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" asp-action="Logout" asp-controller="Admin">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Sign Out</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                                <!-- End Profile Dropdown Items -->
+                            }
+                        </li><!-- End Profile Nav -->
+
+                    </ul>
+                </nav><!-- End Icons Navigation -->
+
+            </header><!-- End Header -->
+            <!-- ======= Sidebar ======= -->
+            <aside id="sidebar" class="sidebar">
+
+                <ul class="sidebar-nav" id="sidebar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link " asp-action="Index" asp-controller="Admin">
+                            <i class="bi bi-grid "></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li><!-- End Dashboard Nav -->
+                    @if (LogState.IsLoged)
+                    {
+                        if(LogState.Level == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link collapsed" asp-action="Index" asp-controller="AdminMng">
+                                    <i class="bi bi-grid"></i>
+                                    <span>Admin management</span>
+                                </a>
+                            </li>
+
+                            <!-- End Admin Nav -->
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" asp-action="Index" asp-controller="CustomerMng">
+                                <i class="bi bi-grid "></i>
+                                <span>Customer management</span>
+                            </a>
+                        </li>
+
+                        <!-- End Customer Nav -->
+
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" asp-action="Index" asp-controller="FoodCategoryMng">
+                                <i class="bi bi-grid "></i>
+                                <span>Food Category</span>
+                            </a>
+                        </li>
+
+                        <!-- End FoodCategory Nav -->
+
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" asp-action="Index" asp-controller="FoodMng">
+                                <i class="bi bi-grid "></i>
+                                <span>Food management</span>
+                            </a>
+                        </li>
+
+                        <!-- End Food Nav -->
+
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                                <i class="bi bi-menu-button-wide"></i><span>Orders management</span><i class="bi bi-chevron-down ms-auto"></i>
+                            </a>
+                            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                                @{
+                                    // Orders set state
+                                    string s1 = "Not delivered";
+                                    string s2 = "Ongoing deliveries";
+                                    string s3 = "Delivered";
+                                }
+                                <li>
+                                    <a asp-action="Index" asp-controller="OrdersMng" asp-route-state="@s1">
+                                        <i class="bi bi-circle"></i><span>Not delivered</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-action="Index" asp-controller="OrdersMng" asp-route-state="@s2">
+                                        <i class="bi bi-circle"></i><span>Ongoing deliveries</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-action="Index" asp-controller="OrdersMng" asp-route-state="@s3">
+                                        <i class="bi bi-circle"></i><span>Delivered</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- End Components Nav -->
+
+                        <li class="nav-heading">Pages</li>
+
+                    }
+                    else
+                    {
+                       
+                        <li class="nav-heading">Pages</li>
+
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" asp-action="Login" asp-controller="Admin">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                <span>Login</span>
+                            </a>
+                        </li>
+
+                        <!-- End Login Page Nav -->
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" asp-action="Index" asp-controller="Home">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Exit</span>
+                        </a>
+                    </li>
+
+                    <!-- End Exit Nav -->
+                </ul>
+
+            </aside><!-- End Sidebar-->
+        </div>
+        <div class="col-lg-10">
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>NET105_PS30117_TranGiaHao_ASM</span></strong>. All Rights Reserved
+        </div>
+    </footer><!-- End Footer -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/adminmain.js"></script>
+    <script src="https://kit.fontawesome.com/8035209fb7.js" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

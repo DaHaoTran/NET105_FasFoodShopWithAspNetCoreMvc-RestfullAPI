@@ -1,0 +1,55 @@
+﻿@model UI.Models.Admin
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Delete Admin</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mt-2">
+        @TempData["Error"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Admin</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsOnl)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsOnl)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+    </dl>
+    
+    <form class="mt-2" asp-action="Delete" asp-controller="AdminMng" method="post">
+        <input type="hidden" asp-for="AdminCode" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-controller="AdminMng">Back to List</a>
+    </form>
+</div>

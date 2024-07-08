@@ -1,0 +1,47 @@
+﻿@model UI.Models.CustomerInformation
+
+@{
+    ViewData["Title"] = "DeleteInformation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid text-center">
+            <h1>DeleteInformation</h1>
+
+            <h3>Bạn có chắc muốn xóa địa chỉ?</h3>
+            <div>
+                <h4>Xóa địa chỉ</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Tên khách hàng
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CustomerName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Số điện thoại
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Địa chỉ
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+                </dl>
+
+                <form asp-action="DeleteInformation" asp-controller="Home" method="post">
+                    <input type="hidden" asp-for="CInforId" />
+                    <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                    <a asp-action="Informations" asp-controller="Home">Quay trở lại</a>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>

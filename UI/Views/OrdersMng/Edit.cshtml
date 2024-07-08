@@ -1,0 +1,47 @@
+﻿@model UI.Models.Order
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+<h1>Edit Order</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-controller="OrdersMng" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderId" />
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <select asp-for="State" class="form-control" >
+                    <option value="Not delivered">Chưa giao</option>
+                    <option value="Ongoing deliveries">Đang giao</option>
+                    <option value="Delivered">Đã giao</option>
+                </select>
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="OrdersMng">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

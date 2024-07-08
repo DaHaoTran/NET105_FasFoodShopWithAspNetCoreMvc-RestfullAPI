@@ -1,0 +1,91 @@
+﻿@model UI.Models.Food
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+    string Searchstr = string.Empty;
+}
+
+<h1 style="margin-top: 150px">Food Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<a asp-action="Back" asp-controller="FoodMng">Trở lại</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreviousPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Left)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sold)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Admin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.FoodName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.CurrentPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.PreviousPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Left)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Sold)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.FoodType.FTypeCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.FoodCategory.FCategoryCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Admin.AdminCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="FoodMng" asp-route-id="@Model.FoodCode">Edit</a> |
+                <a asp-action="Details" asp-controller="FoodMng" asp-route-id="@Model.FoodCode">Details</a> |
+                <a asp-action="Delete" asp-controller="FoodMng" asp-route-id="@Model.FoodCode">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

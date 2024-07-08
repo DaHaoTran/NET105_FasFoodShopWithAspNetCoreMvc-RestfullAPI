@@ -1,0 +1,80 @@
+﻿@model IEnumerable<UI.Models.Order>
+@{
+    ViewData["Title"] = "Orders Page";
+}
+
+<!-- orders section-->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid text-center">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-action="Orders" asp-route-state="Not delivered">Chưa giao</a>
+                    <button class="navbar-toggler bg-black" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="navbar-brand active" aria-current="page" asp-action="Orders" asp-route-state="Ongoing deliveries">Đang giao</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="navbar-brand" asp-action="Orders" asp-route-state="Delivered">Đã giao</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Theo địa chỉ
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <hr />
+           <div class="row">
+               @foreach(var item in Model) {
+                    <div class="card col-3 my-2 text-center">
+                        <div class="card-body">
+                            <table class="text-center">
+                                <tr>
+                                    <th>Id</th>
+                                    <td>@item.OrderId</td>
+                                </tr>
+                                <tr>
+                                    <th>Ngày đặt</th>
+                                    <td>@item.OrderDate</td>
+                                </tr>
+                                <tr>
+                                    <th>Trạng thái</th>
+                                    <th>@item.State</th>
+                                </tr>
+                                @if(item.DeliveryDate != null)
+                                {
+                                    <tr>
+                                        <th>Ngày giao</th>
+                                        <td>@item.DeliveryDate</td>
+                                    </tr>
+                                } else
+                                {
+                                    <tr>
+                                        <th>Ngày giao</th>
+                                        <td>Null</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="OrderDetail" asp-route-id="@item.OrderId" class="link-primary">Xem chi tiết >></a>
+                        </div>
+                    </div>
+               }
+           </div>
+        </div>
+    </section>
+</div>
+<!-- end orders section-->

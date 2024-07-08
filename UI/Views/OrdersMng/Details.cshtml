@@ -1,0 +1,95 @@
+﻿@model UI.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Details Order</h1>
+
+<div class="row">
+    <div class="col-4">
+        <h4>Order</h4>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.OrderDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.State)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.State)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DeliveryDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Comment)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Comment)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PaymentMethod)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PaymentMethod)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CInforId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CInforId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Customer)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CustomerEmail)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-8">
+        <form class="text-start m-2">
+            <label class="form-label"><h4>Address: </h4></label>
+            <div class="card bg-warning">
+                <div class="card-body">
+                    <strong>@ViewBag.Address.PhoneNumber</strong>
+                    <p>@ViewBag.Address.CustomerName</p>
+                    <p>@ViewBag.Address.Address</p>
+                </div>
+            </div>
+        </form>
+        <h4 class="m-2">Items: </h4>
+        <table class="table table-bordered table-active">
+            <tr>
+                <th>Product name</th>
+                <th>Unit price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            @foreach(var item in ViewBag.Items)
+            {
+                <tr>
+                    @{
+                        int total = @item.UnitPrice * item.Quantity;
+                    }
+                    <td>@item.FoodCode</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>@total.ToString("##,###,###") đồng</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="mt-2">
+    <a asp-action="Edit" asp-controller="OrdersMng" asp-route-id="@Model?.OrderId">Edit</a> |
+    <a asp-action="Index" asp-controller="OrdersMng">Back to List</a>
+</div>

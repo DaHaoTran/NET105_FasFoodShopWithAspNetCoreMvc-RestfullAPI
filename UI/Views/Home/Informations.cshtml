@@ -1,0 +1,82 @@
+﻿@model IEnumerable<UI.Models.CustomerInformation>
+@{
+    ViewData["Title"] = "Informations page";
+    Layout = "_Layout";
+}
+
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid">
+            <h3 class="text-center">Danh sách địa chỉ giao hàng</h3>
+            @if(Model.Count() <= 0)
+            {
+                <h3>Không tìm thấy</h3>
+            } 
+            else{
+                var def = Model.Where(X => X.CInforId == ViewBag.InforId).FirstOrDefault();
+                <a class="nav nav-link mt-2" asp-action="AddressRegister" asp-controller="Home">Tạo mới</a>
+                <div class="row">
+                    <div class="col-4 text-start mt-2">
+                        <label class="form-label"><h5>Địa chỉ: </h5></label>
+                        <div class="card bg-warning">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                địa chỉ mặc định
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                            <div class="card-body">
+                                <strong>@def.PhoneNumber</strong>
+                                <p>@def.CustomerName</p>
+                                <p>@def.Address</p>
+                            </div>
+                            <a class="text-end link-primary" asp-action="DefaultAddress" asp-controller="Home" asp-route-id="@def.CInforId">đặt làm địa chỉ mặc định >></a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    if (item.CInforId == ViewBag.InforId)
+                    {
+                        continue;
+                    }
+                    <div class="col-4 text-start mt-2">
+                        <label class="form-label"><h5>Địa chỉ: | <a class="link-secondary" asp-action="DeleteInformation" asp-controller="Home" asp-route-id="@item.CInforId"><i style="color: red" class="fa-solid fa-trash"></i></a></h5></label>
+                        <div class="card bg-warning">
+                            <div class="card-body">
+                                <strong>@item.PhoneNumber</strong>
+                                <p>@item.CustomerName</p>
+                                <p>@item.Address</p>
+                            </div>
+                            <a class="text-end link-primary" asp-action="DefaultAddress" asp-controller="Home" asp-route-id="@item.CInforId">đặt làm địa chỉ mặc định >></a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Complete message -->
+@{
+    bool showMessage = false;
+    if (TempData["DSucess"] != null)
+    {
+        showMessage = (bool)TempData["DSucess"]!;
+    }
+}
+
+@if (showMessage)
+{
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                 title: "Xóa!",
+                 text: "Địa chỉ của bạn đã xóa thành công.",
+                 icon: "success"
+             });
+        })
+    </script>
+}
+<!-- End Complete message-->

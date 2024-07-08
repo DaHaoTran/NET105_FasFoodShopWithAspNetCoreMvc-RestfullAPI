@@ -1,0 +1,71 @@
+﻿@model UI.Models.Order
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Order Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<a asp-action="Back" asp-controller="OrdersMng">Trở lại</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CInforId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerEmail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.CInforId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.CustomerEmail)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="OrdersMng" asp-route-id="@Model.OrderId">Edit</a> |
+                <a asp-action="Details" asp-controller="OrdersMng" asp-route-id="@Model.OrderId">Details</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

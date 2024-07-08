@@ -1,0 +1,60 @@
+﻿@model UI.Models.Admin
+@{
+    ViewData["Title"] = "Login page";
+    Layout = "Layout2";
+}
+
+<div class="container">
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <div class="d-flex justify-content-center py-4">
+                    <a href="index.html" class="logo d-flex align-items-center w-auto">
+                        <img src="assets/img/logo.png" alt="">
+                        <span class="d-none d-lg-block">Fast Food Admin</span>
+                    </a>
+                </div><!-- End Logo -->
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        @if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-danger mt-2">
+                                @TempData["Message"]
+                                <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                </button>
+                            </div>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <div class="pt-4 pb-2">
+                        <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                        <p class="text-center small">Enter your email & password to login</p>
+                        </div>
+
+                        <form class="row g-3" asp-action="Login" asp-controller="Admin" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-12">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input asp-for=Email type="email" required class="form-control">
+                                    <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <input asp-for="Password" type="password" required class="form-control">
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <input class="btn btn-primary w-100" type="submit" value="Login" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+</div>

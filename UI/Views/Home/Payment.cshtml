@@ -1,0 +1,83 @@
+﻿@model IEnumerable<UI.Models.Food>
+@{
+    ViewData["Title"] = "Payment Page";
+    int? all = 0;
+    string comment = string.Empty;
+    string method = string.Empty;
+}
+
+<!-- Payment section -->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid text-center">
+            <h1 class="text-center mb-5">Thanh toán</h1>
+            <table class="table table-borderless text-center position-relative" id="cart">
+                <tr>
+                    <th><h5>Ảnh sản phẩm</h5></th>
+                    <th><h5>Tên</h5></th>
+                    <th><h5>Đơn giá</h5></th>
+                    <th><h5>Số lượng</h5></th>
+                    <th><h5>Tổng tiền</h5></th>
+                </tr>
+
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td style="width: 100px;">
+                            <img class="img-thumbnail" style="width: 200px;" src="~/images/foods/@item.Image">
+                        </td>
+                        <td style="width: 300px">
+                            <h5>@item.FoodName</h5>
+                        </td>
+                        <td style="width: 200px; color: green">
+                            <h5>@item.CurrentPrice.ToString("##,###,###") đ</h5>
+                        </td>
+                        <td style="width: 200px;">
+                            <h5>@item.Quantity</h5>
+                        </td>
+                        <td style="width: 200px; color: green">
+                            @{
+                                int? total = item.Quantity * item.CurrentPrice;
+                                all += total;
+                            }
+                            <h5>@total?.ToString("##,###,###") đ</h5>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5" class="text-start"><h3>Tổng thanh toán: @all?.ToString("##,###,###") đ</h3></td>
+                </tr>
+                <tr>
+                    <td>
+                        <form class="text-start" asp-action="DoPayment" asp-controller="Home">
+                            <label class="form-label"><h5>Địa chỉ: | <a class="link-primary" asp-action="Informations" asp-controller="Home">Đổi địa chỉ >></a></h5></label>
+                            <div class="card bg-warning">
+                                <div class="card-body">
+                                    <strong>@ViewBag.Infor.PhoneNumber</strong>
+                                    <p>@ViewBag.Infor.CustomerName</p>
+                                    <p>@ViewBag.Infor.Address</p>
+                                </div>
+                            </div>
+                            <label class="form-label mt-2"><h5>Ghi chú: </h5></label>
+                            <textarea class="position-relative" style="width: 500px; height: 200px" asp-for="@comment" placeholder="Nhập nội dung"></textarea>
+                            <label class="form-label mt-2"><h5>Phương thức thanh toán: </h5></label>
+                            <select class="form-control" asp-for="@method">
+                                <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
+                                <option value="Lấy tại cửa hàng">Lấy tại cửa hàng</option>
+                                @* <option value="Thanh toán ngân hàng">Thanh toán ngân hàng</option> *@
+                            </select>
+                            <input type="submit" class="btn btn-success mt-2" style="width: 100%; height: 60px; font-size: 30px" value="Xác nhận" />
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</div>
+<!--end payment section-->

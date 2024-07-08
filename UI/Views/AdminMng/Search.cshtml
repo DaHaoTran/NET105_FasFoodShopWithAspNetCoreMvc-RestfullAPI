@@ -1,0 +1,60 @@
+﻿@model UI.Models.Admin
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Admin Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<a asp-action="Back" asp-controller="AdminMng">Trở lại</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsOnl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelitem => modelitem.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.IsOnl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.CreatedDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="AdminMng" asp-route-id="@Model.AdminCode">Edit</a> |
+                <a asp-action="Details" asp-controller="AdminMng" asp-route-id="@Model.AdminCode">Details</a> |
+                <a asp-action="Delete" asp-controller="AdminMng" asp-route-id="@Model.AdminCode">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

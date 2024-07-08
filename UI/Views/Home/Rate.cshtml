@@ -1,0 +1,65 @@
+﻿@model UI.Models.Food;
+@{
+    ViewData["Title"] = "Rate page";
+    Layout = "_Layout";
+    string comment = string.Empty;
+    int value = 5;
+}
+
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                </div>
+                <div class="col-4" style="border: 2px solid black; border-radius: 10px">
+                    <h4 class="text-center">@Model.FoodName</h4>
+                    <img src="~/images/foods/@Model.Image" style="width: 245px" height="200px" />
+                    <!--Stars rating-->
+                    <div class="mt-2 text-center" style="border: 1px solid black;border-radius: 8px; background-color: black">
+                        <span onclick="changeValue(1)" id="stars1" class="fa fa-star" style="color: yellow"></span>
+                        <span onclick="changeValue(2)" id="stars2" class="fa fa-star" style="color: yellow"></span>
+                        <span onclick="changeValue(3)" id="stars3" class="fa fa-star" style="color: yellow"></span>
+                        <span onclick="changeValue(4)" id="stars4" class="fa fa-star" style="color: yellow"></span>
+                        <span onclick="changeValue(5)" id="stars5" class="fa fa-star" style="color: yellow"></span>
+                    </div>
+                    <!--End stars rating-->
+                    <form asp-action="RateConfirm" method="post">
+                        <input type="hidden" asp-for="@value" id="value"/>
+                        <input type="hidden" asp-for="@Model.FoodCode"/>
+                        <input type="hidden" asp-for="@Model.OrderId"/>
+                        <!--Submit-->
+                        <input type="submit" class="btn btn-success mt-2 text-center" value="Gửi"/>
+                        <!--End Submit-->
+                    </form>
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+
+    function hasYellowColor(element) {
+        var style = window.getComputedStyle(element);
+        return style.color === "rgb(255, 255, 0)"; // Màu yellow trong định dạng RGB
+    }
+
+    function changeValue(number) {
+        var star = document.querySelector("#stars" + number);
+        if (hasYellowColor(star)) {
+            var count = parseInt(document.querySelector("#value").value) - 1;
+            if (count > 0) {
+                star.setAttribute("style", "color: lightgray");
+                document.querySelector("#value").value = count;
+            }
+        } else {
+            star.setAttribute("style", "color: yellow");
+            var count = parseInt(document.querySelector("#value").value) + 1;
+            document.querySelector("#value").value = count;
+        }
+    }
+</script>

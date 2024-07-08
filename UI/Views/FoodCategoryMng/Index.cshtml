@@ -1,0 +1,66 @@
+﻿@model IEnumerable<UI.Models.FoodCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+    string Searchstr = string.Empty;
+}
+
+<h1 style="margin-top: 150px">Food Category Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">
+        @TempData["Message"]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" asp-controller="FoodCategoryMng">Create New</a>
+</p>
+
+<form asp-action="Search" asp-controller="FoodCategoryMng" asp-route-searchstr="@Searchstr">
+    <div class="input-group">
+        <input class="form-control" asp-for="@Searchstr" type="search" required placeholder="Nhập tên loại đồ ăn" aria-label="Search" id="Search" size="35px">
+        <input type="submit" class="input-group-text btn btn-secondary" value="Search">
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="FoodCategoryMng" asp-route-id="@item.FCategoryCode">Edit</a> |
+                <a asp-action="Details" asp-controller="FoodCategoryMng" asp-route-id="@item.FCategoryCode">Details</a> |
+                <a asp-action="Delete" asp-controller="FoodCategoryMng" asp-route-id="@item.FCategoryCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="btn-group">
+    <a asp-action="Prev" asp-controller="FoodCategoryMng" class="btn btn-primary mt-3 me-3 me-5 p-2"><i class="fa-solid fa-arrow-left"></i></a>
+    <a asp-action="Next" asp-controller="FoodCategoryMng" class="btn btn-primary mt-3 me-5 p-2"><i class="fa-solid fa-arrow-right"></i></a>
+</div>
+
+

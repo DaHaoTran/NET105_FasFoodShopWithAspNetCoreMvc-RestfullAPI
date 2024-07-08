@@ -1,0 +1,38 @@
+﻿@model UI.Models.FoodCategory
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Details Food Category</h1>
+
+<div class="row">
+    <div class="col-6">
+        <div>
+            <h4>FoodCategory</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.CategoryName)
+                </dd>
+                @* <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Image)
+                </dd> *@
+            </dl>
+        </div>
+    </div>
+    <div class="col-6">
+        <img src="~/images/foodcategories/@Model.Image" style="width: 300px; height: 300px"/>
+    </div>
+</div>
+<div class="mt-2">
+    <a asp-action="Edit" asp-controller="FoodCategoryMng" asp-route-id="@Model?.FCategoryCode">Edit</a> |
+    <a asp-action="Index" asp-controller="FoodCategoryMng">Back to List</a>
+</div>

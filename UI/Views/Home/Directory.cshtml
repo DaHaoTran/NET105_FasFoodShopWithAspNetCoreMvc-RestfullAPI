@@ -1,0 +1,44 @@
+﻿@model IEnumerable<UI.Models.FoodCategory>
+@{
+    ViewData["Title"] = "Directory Page";
+}
+
+<!-- list section -->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="heading_container">
+                                <hr>
+                                <h2>
+                                    Danh <br>
+                                    mục <br>
+                                </h2>
+                            </div>
+                            <p>
+                                Các danh mục phân loại thức ăn
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="dish_container">
+                            @foreach (var item in Model)
+                            {
+                                <div class="box m-2" style="background-color: black; width: 250px">
+                                    <a asp-action="Products" asp-controller="Home" asp-route-sort="0" asp-route-code="@item.FCategoryCode">
+                                        <img src="~/images/foodcategories/@item.Image" alt="">
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end list section-->

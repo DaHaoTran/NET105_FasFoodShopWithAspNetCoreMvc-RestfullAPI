@@ -1,0 +1,67 @@
+﻿@model IEnumerable<UI.Models.Food>
+@{
+    ViewData["Title"] = "Cart page";
+    Layout = "_Layout";
+}
+
+<!-- cart offcanvas -->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid">
+            <div class="card" style="width: 1900px">
+                <div class="card-body">
+                    <table class="table table-hover text-center" id="cart">
+                        @if (Model.Count() > 0)
+                        {
+                            <tr>
+                                <th><h5>Ảnh sản phẩm</h5></th>
+                                <th><h5>Tên</h5></th>
+                                <th><h5>Đơn giá</h5></th>
+                                <th><h5>Số lượng</h5></th>
+                                <th><h5>Tổng tiền</h5></th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="width: 380px;">
+                                        <img class="img-thumbnail" style="width: 200px;" src="~/images/foods/@item.Image">
+                                    </td>
+                                    <td style="width: 380px">
+                                        <h5>@item.FoodName</h5>
+                                    </td>
+                                    <td style="width: 380px; color: green">
+                                        <h5>@item.CurrentPrice.ToString("##,###,###") đ</h5>
+                                    </td>
+                                    <td style="width: 380px; color: green">
+                                        <h5>@item.Quantity</h5>
+                                    </td>
+                                    <td style="width: 380px; color: green">
+                                        @{
+                                            int? total = item.Quantity * item.CurrentPrice;
+                                        }
+                                        <h5>@total?.ToString("##,###,###") đ</h5>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-action="RemoveItem" asp-controller="Home" asp-route-code="@item.FoodCode"><i style="color: white" class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="text-center" colspan="3"><a asp-action="Index" class="btn btn-primary">Tiếp tục mua hàng</a></td>
+                                <td class="text-center" colspan="3"><a asp-action="Payment" class="btn btn-primary">Thanh toán</a></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <h3 class="text-center" style="margin-top: 35px">không có gì trong sản phẩm hết</h3>
+                        }
+
+                    </table>
+                </div>
+            </div>
+            <!-- end cart offcanvas -->
+        </div>
+    </section>
+</div>

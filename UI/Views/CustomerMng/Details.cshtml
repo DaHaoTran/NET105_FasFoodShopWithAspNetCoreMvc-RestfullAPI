@@ -1,0 +1,37 @@
+﻿@model UI.Models.Customer
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1>Details Customer</h1>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PassWord)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PassWord)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Admins)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AdminCode)
+        </dd>
+    </dl>
+</div>
+<div class="mt-2">
+    <a asp-action="Edit" asp-controller="CustomerMng" asp-route-id="@Model?.Email">Edit</a> |
+    <a asp-action="Index" asp-controller="CustomerMng">Back to List</a>
+</div>

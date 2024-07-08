@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@ViewData["Title"] - FoodShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FoodShop.styles.css" asp-append-version="true" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/customquantitybtn.css" rel="stylesheet" />
+    <link href="~/lib/angularjs/angular-csp.css" rel="stylesheet" />
+    <link href="~/lib/angularjs/angular-csp.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700|Raleway:400,700&display=swap" rel="stylesheet" />
+</head>
+<body ng-app="myapp">
+    <div class="hero_area container-fluid">
+        <!-- header section strats -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container" ng-controller="navCtrl">
+                    <a class="navbar-brand" asp-action="Index">
+                        <img src="~/images/logo.png" alt="" />
+                        <span>
+                            FastFood
+                        </span>
+                    </a>
+
+                    <div class="navbar-collapse" id="">
+                        <div class="custom_menu-btn">
+                            <button onclick="openNav()">
+                                <span class="s-1"> </span>
+                                <span class="s-2"> </span>
+                                <span class="s-3"> </span>
+                            </button>
+                        </div>
+                        <div id="myNav" class="overlay">
+                            <div class="overlay-content">
+                                @if(string.IsNullOrEmpty(LogStateC.Username))
+                                {
+                                    <a><img src="~/images/user.png" /> Unknow</a>
+                                } else
+                                {
+                                    <a><img src="~/images/user.png" />@LogStateC.Username</a>
+                                }
+                                @{string Searchstr = string.Empty;}
+                                <form asp-action="Search" asp-controller="Home" asp-route-searchstr="">
+                                    <input type="search" required asp-for="@Searchstr" class="form-control" placeholder="Nhập tên thức ăn">
+                                    <input class="btn btn-dark mt-1" type="submit" value="Tìm kiếm"/>
+                                </form>
+                                <a asp-action="Index">Trang chủ</a>
+                                <a asp-action="About">Giới thiệu</a>
+                                <a asp-action="Directory">Danh mục</a>
+                                @if(LogStateC.IsLoggedIn == false)
+                                {
+                                    <a asp-action="Register">Đăng nhập</a>
+                                } else
+                                {
+                                    <a asp-action="Logout"><img src="~/images/logout.png" /></a>
+                                }
+                                <a asp-action="Informations">Địa chỉ</a>
+                                <a asp-action="Orders">Đơn hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- end header section -->
+        <!-- body section-->
+        <div class="container-fluid" ng-controller="bodyCtrl">
+            @await RenderSectionAsync("Cart", required: false)
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <!-- end body section-->
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/8035209fb7.js" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/customquantitybtn.js"></script>
+    <script src="~/lib/angularjs/angular.js"></script>
+    <script src="~/lib/angularjs/angular.min.js"></script>
+    <script src="~/js/SelectProduct_Ang.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script type="text/javascript">
+            function openNav() {
+                document.getElementById("myNav").classList.toggle("menu_width");
+                document
+                    .querySelector(".custom_menu-btn")
+                    .classList.toggle("menu_btn-style");
+            }
+        </script>
+            
+        <!-- owl carousel script -->
+        <script type="text/javascript">
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 35,
+                navText: [],
+                autoplay: true,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 3
+                    }
+                }
+            });
+        </script>
+        <!-- end owl carousel script -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

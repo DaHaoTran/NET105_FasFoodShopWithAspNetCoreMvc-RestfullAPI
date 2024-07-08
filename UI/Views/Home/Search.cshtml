@@ -1,0 +1,167 @@
+﻿@model IEnumerable<UI.Models.Food>
+@{
+    ViewData["Title"] = "Search Page";
+}
+
+@section Cart {
+    <!-- cart button -->
+    <div style="position: sticky; top: 20px; z-index: 1">
+        <a class="nav-link text-end" asp-action="Cart" asp-controller="Home">
+            <img src="~/images/cart.png" alt="Alternate Text" style="border: 1px solid black; border-radius: 35px; background-color: deepskyblue" />
+            <sup style="font-size: 12px" class="badge bg-danger" id="cartcount">
+                @{
+                    List<Food> foods = new List<Food>();
+                    var datas = HttpContextAccessor.HttpContext!.Session.GetString("cart");
+                    if (datas != null)
+                    {
+                        foods = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Food>>(datas!)!;
+                    }
+                }
+                @foods.Sum(x => x.Quantity)
+            </sup>
+        </a>
+    </div>
+    <!-- end cart button -->
+}
+
+<!--product items section-->
+<div class="sub_page">
+    <section class="contact_section position-relative layout_padding-bottom layout_padding-top"
+             style="border: 2px solid none; border-radius: 20px; background-color: white; height: 700px">
+        <div class="container-fluid">
+            <h3>Bộ lọc</h3>
+            <div class="btn-group mb-1" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio1">
+                    <a asp-action="Products" asp-route-sort="1">Giá thấp đến cao</a>
+                </label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">
+                    <a asp-action="Products" asp-route-sort="2">Giá cao đến thấp</a>
+                </label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">
+                    <a asp-action="Products" asp-route-sort="3">Combo</a>
+                </label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio4">
+                    <a asp-action="Products" asp-route-sort="4">Riêng lẻ</a>
+                </label>
+            </div>
+            <div class="row">
+                @if (Model.Count() > 0)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-3 m-4 card text-center" style="width: 400px; height: 400px">
+                            <div class="card-header">
+                                <h4>@item.FoodName</h4>
+                            </div>
+                            <div class="card-body" style="width: 300px; height: 200px">
+                                <img src="~/images/foods/@item.Image" style="width: 245px" height="200px" />
+                            </div>
+                            <h4 class="my-2">
+                                @item.CurrentPrice.ToString("##,###,###") đ
+                            </h4>
+                            <div class="card-footer bg-black" style="color: white">
+                                <a ng-click="GetFood(@Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented), '@item.FoodCode')" data-bs-delay='{"show":1000,"hide":150}' style="cursor: pointer" id="navbordered" aria-current="page" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1">
+                                    Đặt Món
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h2>Không tìm thấy sản phẩm phù hợp</h2>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end products items section-->
+<!-- order offcanvas -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" style="width: 500px">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <h2 class="text-center">Chọn số lượng</h2>
+        <table class="table table-borderless text-start">
+            <tr class="my-4">
+                <th><img src="~/images/foods/{{imageset}}" width="150px" alt="Image" style="border: 1px solid black" /></th>
+            </tr>
+            <tr class="my-4">
+                <th><h3>{{nameset}}</h3></th>
+            </tr>
+            <tr class="my-4">
+                <th><h3>{{priceset | number}} đồng</h3></th>
+            </tr>
+        </table>
+        <form>
+            <div class="value-button" id="decrease" value="Decrease Value">-</div>
+            <input type="number" id="number" value="1" min="1" readonly/>
+            <div class="value-button" id="increase" value="Increase Value">+</div>
+        </form>
+        @* <p class="text-danger" id="limitmess"></p> *@
+        <button data-id="{{codeset}}" data-bs-dismiss="offcanvas" aria-label="Close" class="btn btn-primary mt-3 text-center align-content-center ajax-add-to-cart" style="font-size: 20px; height: 50px; width: 100%">Xác nhận</button>
+    </div>
+</div>
+<!-- end order offcanvas-->
+<!-- add to cart script -->
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".ajax-add-to-cart").click(function () {
+                $.ajax({
+                    url: "/Home/AddToCart",
+                    data: {
+                        id: $(this).data("id"),
+                        quantity: 1,
+                    },
+                    success: function (data) {
+                        // console.log(data);
+                        setTimeout(function () {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Đã thêm vào giỏ hàng",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }, 700);
+                        var count = parseInt(document.querySelector("#cartcount").innerHTML);
+                        count += data.quantity
+                        $("#cartcount").html(count);
+                    },
+                    error: function () {
+                        console.log("Error");
+                    }
+                });
+            });
+        });
+
+        function CallCartController() {
+            $.ajax({
+                url: "/Home/UpdateCartItem",
+                success: function () {
+                    console.log("Cart is saved !");
+                },
+                error: function () {
+                    console.log("Error update to cart !");
+                }
+            });
+        };
+
+        const debouncedFunction = _.debounce(CallCartController, 10000, {
+            leading: true,
+            trailing: false
+        });
+
+        document.querySelector(".ajax-add-to-cart").addEventListener('click', debouncedFunction);
+    </script>
+}
+<!-- end add to cart script -->

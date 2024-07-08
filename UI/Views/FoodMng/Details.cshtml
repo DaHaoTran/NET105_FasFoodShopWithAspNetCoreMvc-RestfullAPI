@@ -1,0 +1,78 @@
+﻿@model UI.Models.Food
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<h1 style="margin-top: 150px">Details Food</h1>
+
+<div class="row">
+    <div class="col-6">
+        <h4>Food</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FoodName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FoodName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CurrentPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CurrentPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PreviousPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PreviousPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Left)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Left)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Sold)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Sold)
+            </dd>
+            @*  <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+            </dt>
+            <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Image)
+            </dd> *@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FoodType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FTypeCode)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FoodCategory)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCategoryCode)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Admin)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AdminCode)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-6">
+        <img src="~/images/foods/@Model.Image" style="width: 300px; height: 300px" />
+    </div>
+</div>
+<div class="mt-2">
+    <a asp-action="Edit" asp-controller="FoodMng" asp-route-id="@Model?.FoodCode">Edit</a> |
+    <a asp-action="Index" asp-controller="FoodMng">Back to List</a>
+</div>
