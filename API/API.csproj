@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UI\FoodShop\FoodShop.csproj" />
     <ProjectReference Include="..\UI\UI.csproj" />
   </ItemGroup>
 
