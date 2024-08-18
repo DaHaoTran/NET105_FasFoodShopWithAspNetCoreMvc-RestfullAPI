@@ -1,0 +1,1 @@
+The purpose of project to get acquainted with Asp.Net Core Mvc technology at school. The project use Asp.Net Core Mvc to make a website and call the Restful API method. To get more describle, watch report in docs folder in UI/wwwroot and there are other documents there as well
